@@ -38,4 +38,27 @@
    36  vim inventory 
    37  ansible db -i inventory -m ping -u vagrant -k 
    38  ansible web -i inventory -m ping -u vagrant -k
+
+
+==================== Demo 2 =========================
+55  cd ..
+   56  ls
+   57  cd ansible-accenture-06-Sept-2021/
+   58  ls
+   59  git pull
+   60  cd 01-Inventory/
+   61  ll
+   62  ls
+   63  vim inventory
+   64  ls
+   65  ansible web -i inventory -u vagrant -k
+   66  ansible web -i inventory -u vagrant -m ping  -k
+   67  ansible db -i inventory -u vagrant -m ping  -k
+   68  ansible datacenter -i inventory -u vagrant -m ping  -k
+   69  ls
+   70  vim inventory
+   71  ls
+   72  ansible dc -i inventory -m ping
+   73  vim inventory
+   74  ansible dc -i inventory -m ping
 ``` 
