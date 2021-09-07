@@ -1,0 +1,84 @@
+---
+- hosts: web
+  vars:
+    doc_root: "/var/www/html/"
+    user: "Amit Vashist"
+    sitename: "Test 1"
+    http_port: 8080
+
+#  vars_prompt:
+#  - name: sitename
+#    prompt: What would be your site name ?
+
+  tasks:
+  - name: Ansible Date fact Example
+    debug: var=ansible_date_time.date
+ 
+  - debug: msg="Provided Site Name is {{sitename}}"
+
+  - name: Install HTTPD Packages 
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat" 
+
+  - name: Install Apache Packages
+    apt: name=apache2 state=present 
+    when: ansible_os_family == "Debian" 
+
+  - name: Start Apache Service 
+    service: name=apache2 state=started enabled=True 
+    when: ansible_os_family == "Debian" 
+
+  - name: Start HTTPD Service 
+    service: name=httpd state=started enabled=True 
+    when: ansible_os_family == "RedHat" 
+
+  - name: Disable Firewall Service 
+    service: name=ufw state=stopped enabled=False
+    when: ansible_os_family == "Debian" 
+
+  - name: Disable FirewallD Service 
+    service: name=firewalld state=stopped enabled=False
+    when: ansible_os_family == "RedHat" 
+
+
+  - name: Deploy Apache Config files
+    template: src=templates/apache2.conf.j2 dest=/etc/apache2/apache2.conf
+
+
+  - name: Deploy Apache Port Config files
+    template: src=templates/ports.conf.j2 dest=/etc/apache2/ports.conf
+    notify:
+      - Restart Apache
+
+
+  - name: Deploy Custom Index Page
+    copy: src=files/index.html dest={{doc_root}}/index.html
+ 
+  - name: Check who AM I. 
+    command: whoami
+    register: username
+
+  - debug: var=username
+
+  - name: Check the Web file
+    command: ls {{doc_root}}/info.html
+    register: result
+    ignore_errors: yes 
+
+  - debug: msg="Unable to locate file info.html"
+    when: result|failed
+    
+
+  - debug: msg="The file has been locate - file name info.html"
+    when: result|success
+
+  
+  - name: Deploy missing info.html file to the respective nodes
+    template: src=templates/info.j2 dest={{doc_root}}/info.html
+
+
+  handlers:
+  - name: Restart Apache
+    service: name=apache2 state=restarted
+
+
