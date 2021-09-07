@@ -27,3 +27,26 @@
 
   - name: Deploy Custom Index Page
     copy: src=files/index.html dest=/var/www/html/index.html
+ 
+  - name: Check who AM I. 
+    command: whoami
+    register: username
+
+  - debug: var=username
+
+  - name: Check the Web file
+    command: ls /var/www/html/info.html
+    register: result
+    ignore_errors: yes 
+
+  - debug: msg="Unable to locate file info.html"
+    when: result|failed
+    
+
+  - debug: msg="The file has been locate - file name info.html"
+    when: result|success
+
+  
+  - name: Deploy missing info.html file to the respective nodes
+    copy: src=files/info.html dest=/var/www/html/info.html
+    when: result|failed
