@@ -4,7 +4,7 @@
     doc_root: "/var/www/html/"
     user: "Amit Vashist"
     sitename: "Test 1"
-    http_port: 8080
+    http_port: 8081
 
 #  vars_prompt:
 #  - name: sitename
@@ -53,6 +53,9 @@
 
   - name: Deploy Custom Index Page
     copy: src=files/index.html dest={{doc_root}}/index.html
+    notify:
+      - Restart Apache
+      - amit
  
   - name: Check who AM I. 
     command: whoami
@@ -80,5 +83,7 @@
   handlers:
   - name: Restart Apache
     service: name=apache2 state=restarted
+  - name: amit
+    shell: 'echo "Hello Handlers {{ansible_hostname}}" >> /tmp/handler.txt'
 
 
