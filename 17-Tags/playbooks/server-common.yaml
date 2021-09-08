@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  name: "Add Common Functional Users"
+  roles:
+  - server-common
