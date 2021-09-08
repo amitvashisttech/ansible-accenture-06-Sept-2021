@@ -1,0 +1,10 @@
+---
+
+- name: Install NTP Clinet
+  apt: name=ntp state=present
+  when: ansible_os_family == "Debian"
+
+ 
+- name: Install NTP Clinet
+  yum: name=ntpd state=present
+  when: ansible_os_family == "RedHat"
