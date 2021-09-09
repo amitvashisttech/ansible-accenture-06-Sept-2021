@@ -1,57 +1,67 @@
 ```
-762  cd 18-Galaxy/
-  763  ls
-  764  cd roles/
-  765  ls
-  766  ansible-galaxy install adriagalin.motd
-  767  ls
-  768  cp -rf /etc/ansible/roles/adriagalin.motd motd
-  769  ls
-  770  cd motd/
-  771  ls
-  772  tree .
-  773  vim tasks/main.yml
-  774  ls
-  775  cd ..
-  776  ls
-  777  cd ..
-  778  ls
-  779  vim site.yaml
-  780  ansible-playbook site.yaml --check
-  781  vim site.yaml
-  782  ls
-  783  vim playbooks/server-common.yaml
-  784  ansible-playbook site.yaml --tags common
-  785  vim site.yaml
-  786  vim /root/ansible-accenture-06-Sept-2021/18-Galaxy/roles/motd/tasks/main.yml
-  787  wget https://github.com/adriagalin/ansible.motd/archive/refs/tags/1.0.0.tar.gz
-  788  ls
-  789  tar -zxvf 1.0.0.tar.gz
-  790  ls
-  791  cd ansible.motd-1.0.0/
-  792  ls
-  793  cd ..
-  794  ls
-  795  rm 1.0.0.tar.gz
-  796  ls
-  797  cp -rf ansible.motd-1.0.0 roles/motd-1.0
-  798  ls
-  799  rm -rf ansible.motd-1.0.0/
-  800  ls
-  801  vim playbooks/server-common.yaml
-  802  ansible-playbook site.yaml --tags common
-  803  ls
-  804  cd roles/
-  805  ls
-  806  rm -rf motd
-  807  ls
-  808  cd motd-1.0/
-  809  ls
-  810  tree .
-  811  vi defaults/main.yml
-  812  cd ..
-  813  ls
-  814  cd ..
-  815  ls
-  816  ansible-playbook site.yaml --tags common
+1019  cd 22-Ansible-Vault/
+ 1020  ls
+ 1021  cat playbooks/lamp-stack.yaml
+ 1022  mkdir group_vars
+ 1024  mkdir group_vars/{web,db} -p
+ 1026  cd group_vars/
+ 1028  mkdir all
+ 1030* cp -rf web/vars.yaml
+ 1032  d web/
+ 1034  cd web/
+ 1036  cp -rf vars.yaml vault.yaml
+ 1038  vim vault.yaml
+ 1045  cp -rf web/* all/
+ 1046  cp -rf web/* db/
+ 1048  vim all/vault.yaml
+ 1050  ansible-vault encrypt all/vault.yaml
+ 1051  cp -rf all/vault.yaml web/vault.yaml
+ 1052  cp -rf all/vault.yaml db/vault.yaml
+ 1054  ansible-vault edit web/vault.yaml
+ 1055  ansible-vault edit db/vault.yaml
+ 1057  cat all/vault.yaml
+ 1058  cat all/vars.yaml
+ 1059  cat web/vars.yaml
+ 1060  cat web/vault.yaml
+ 1062  cd ..
+ 1063  ls
+ 1064  ansible-playbook playbooks/webserver.yaml
+ 1065  ansible-playbook playbooks/webserver.yaml --ask-vault-pass
+ 1066  ls
+ 1067  mv group_vars playbooks/
+ 1069  ansible-playbook playbooks/webserver.yaml --ask-vault-pass
+ 1070  ansible-playbook playbooks/webserver.yaml
+ 1071  ansible-playbook playbooks/webserver.yaml --ask-vault-pass
+ 1073  mv playbooks/group_vars .
+ 1074  s
+ 1075  ls
+ 1076  vim roles/webserver/vars/main.yml
+ 1077  ansible-playbook playbooks/webserver.yaml --ask-vault-pass
+ 1078  ls
+ 1079  vim roles/webserver/vars/main.yml
+ 1080  ansible-playbook playbooks/webserver.yaml --ask-vault-pass
+ 1082  vim hosts
+ 1084  cd playbooks/
+ 1086  cp -rf webserver.yaml webserver-with-vault.yaml
+ 1088  vim webserver-with-vault.yaml
+ 1089  cd ..
+ 1091  ansible-playbook playbooks/webserver-with-vault.yaml --ask-vault-pass
+ 1093  cd ..
+ 1095  git add . ; git commit -m "22-Ansible-Vault" ; git push
+ 1096  ansible-playbook playbooks/webserver-with-vault.yaml
+ 1097  ls
+ 1098  cd 22-Ansible-Vault/
+ 1099  ansible-playbook playbooks/webserver-with-vault.yaml
+ 1100  vim /root/.ssh/.vault_pass
+ 1101  ansible-playbook playbooks/webserver-with-vault.yaml --ask-vault
+ 1102  ansible-playbook playbooks/webserver-with-vault.yaml --ask-vault-file=/root/.ssh/.vault_pass
+ 1103  ansible-playbook --help | grep -i vault
+ 1104  ansible-playbook playbooks/webserver-with-vault.yaml  --vault-password-file=/root/.ssh/.vault_pass
+ 1105  ls
+ 1106  vim ansible.cfg
+ 1107  ls
+ 1108  ansible-playbook playbooks/webserver-with-vault.yaml
+ 1109  ansible-vault edit group_vars/all/vault.yaml
+ 1110  ansible-playbook playbooks/webserver-with-vault.yaml
+
 ```
