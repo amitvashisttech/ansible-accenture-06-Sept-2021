@@ -1,0 +1,4 @@
+---
+
+user: "{{mysecret_username}}"
+sitename: "{{mysecret_sitename}}"
