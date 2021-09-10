@@ -1,6 +1,0 @@
----
-
-- hosts: all
-  name: "Disable Firewall Play"
-  roles:
-  - firewall

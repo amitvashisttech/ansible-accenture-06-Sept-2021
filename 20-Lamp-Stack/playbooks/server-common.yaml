@@ -1,7 +1,0 @@
----
-
-- hosts: all
-  name: "Add Common Functional Users"
-  roles:
-  - server-common
-  - motd-1.0

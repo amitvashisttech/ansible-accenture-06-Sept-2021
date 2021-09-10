@@ -1,8 +1,0 @@
----
-
-- hosts: web 
-  tasks:
-  - name: with_sequence
-    debug: 
-      msg: "{{item}}" 
-    with_sequence: start=0 end=4 format=textuser%1x

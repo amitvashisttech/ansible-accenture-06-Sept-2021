@@ -1,0 +1,15 @@
+node('master') {
+    
+    def project_path = "22-Ansible-Vault"
+
+    stage('Git CheckOut') {
+        git branch: 'main', url: 'https://github.com/amitvashisttech/ansible-accenture-06-Sept-2021.git'
+    }
+
+   dir(project_path) {
+
+    stage('Ansible Deployment') {
+        sh 'ansible-playbook playbooks/webserver-with-vault.yaml'
+    }
+  }
+}

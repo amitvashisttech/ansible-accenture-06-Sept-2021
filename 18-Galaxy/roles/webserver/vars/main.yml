@@ -1,7 +1,0 @@
----
-# vars file for webserver
-doc_root: "/var/www/html/"
-user: "Amit Vashist"
-sitename: "Testing Ansible Webserver Role"
-http_port: 80
-
