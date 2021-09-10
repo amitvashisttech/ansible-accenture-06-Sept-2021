@@ -50,10 +50,11 @@
 
 - debug: msg="Unable to locate file info.html"
   when: result|failed
-  
+  ignore_errors: yes 
 
 - debug: msg="The file has been locate - file name info.html"
   when: result|success
+  ignore_errors: yes
 
 
 - name: Deploy missing info.html file to the respective nodes
