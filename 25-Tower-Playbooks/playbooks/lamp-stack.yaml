@@ -1,0 +1,7 @@
+---
+
+- hosts: "db:&prod"
+  name: "Lamp Stack Deployment - Wordpress"
+  roles:
+  - lamp-dep
+  - lamp

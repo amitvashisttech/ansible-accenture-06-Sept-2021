@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  name: "WebServer Deployment"
+  vars:
+    change_id: CH00002
+  pre_tasks:
+  - include: roles/pre-post-task/tasks/pre-task.yaml
+  roles:
+  - firewall
+  - webserver
+  post_tasks:
+  - include: roles/pre-post-task/tasks/post-task.yaml
